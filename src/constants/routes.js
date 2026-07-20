@@ -11,5 +11,7 @@ export const ROUTES = {
 
   KNOWLEDGE_BASE: "/knowledge",
 
+  INBOX: "/inbox",
+
   SETTINGS: "/settings",
 };
