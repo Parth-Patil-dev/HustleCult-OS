@@ -11,7 +11,7 @@ function AddOpportunityModal({ open, onOpenChange }) {
     organization: "",
     deadline: "",
     description: "",
-    status: "Discovered",
+    stage: "Found",
     link: "",
     members: [],
   });
@@ -39,7 +39,7 @@ function AddOpportunityModal({ open, onOpenChange }) {
       organization: "",
       deadline: "",
       description: "",
-      status: "Discovered",
+      stage: "Found",
       link: "",
       members: [],
     });
@@ -153,35 +153,18 @@ function AddOpportunityModal({ open, onOpenChange }) {
           {/* Status */}
 
           <select
-            name="status"
+            name="stage"
             value={formData.status}
             onChange={handleChange}
             className="w-full rounded-lg border p-3 bg-transparent"
           >
 
-            <option value="Discovered">
-              Discovered
-            </option>
-
-            <option value="Applied">
-              Applied
-            </option>
-
-            <option value="Shortlisted">
-              Shortlisted
-            </option>
-
-            <option value="In Progress">
-              In Progress
-            </option>
-
-            <option value="Completed">
-              Completed
-            </option>
-
-            <option value="Rejected">
-              Rejected
-            </option>
+            <option value="Found">Found</option>
+<option value="Interested">Interested</option>
+<option value="Researching">Researching</option>
+<option value="Active">Active</option>
+<option value="Submitted">Submitted</option>
+<option value="Results">Results</option>
 
           </select>
 

@@ -1,5 +1,4 @@
-function Card({ children, className = "" }) {
-
+function Card({ children, className = "", ...props }) {
   return (
     <div
       className={`
@@ -11,6 +10,7 @@ function Card({ children, className = "" }) {
         shadow-sm
         ${className}
       `}
+      {...props}
     >
       {children}
     </div>

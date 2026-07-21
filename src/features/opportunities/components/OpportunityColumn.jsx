@@ -1,8 +1,19 @@
 import OpportunityCard from "./OpportunityCard";
+import { useDroppable } from "@dnd-kit/core";
 
 function OpportunityColumn({ title, opportunities }) {
+  const { setNodeRef, isOver } = useDroppable({
+  id: title,
+});
   return (
-    <div className="min-w-[340px] rounded-xl bg-slate-950 p-4">
+    <div
+  ref={setNodeRef}
+  className={`min-w-[340px] rounded-xl p-4 transition-all duration-200 ${
+    isOver
+      ? "bg-slate-800 ring-2 ring-blue-500"
+      : "bg-slate-950"
+  }`}
+>
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-white">
           {title}

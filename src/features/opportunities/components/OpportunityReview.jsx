@@ -1,52 +1,57 @@
 import {
   CheckCircle2,
-  AlertTriangle,
   Sparkles,
+  ArrowLeft,
 } from "lucide-react";
 
 import Card from "@/components/ui/Card";
 
-const extractedFields = [
-  {
-    label: "Title",
-    value: "Google Solution Challenge",
-    valid: true,
-  },
-  {
-    label: "Organizer",
-    value: "Google",
-    valid: true,
-  },
-  {
-    label: "Registration Deadline",
-    value: "15 Aug 2026",
-    valid: true,
-  },
-  {
-    label: "Submission Deadline",
-    value: "30 Sept 2026",
-    valid: true,
-  },
-  {
-    label: "Prize",
-    value: "$10,000",
-    valid: true,
-  },
-  {
-    label: "Team Size",
-    value: "Not Detected",
-    valid: false,
-  },
-  {
-    label: "Eligibility",
-    value: "Missing",
-    valid: false,
-  },
-];
+function OpportunityReview({
+  formData,
+  onBack,
+  onApprove,
+}) {
+  const fields = [
+    {
+      label: "Title",
+      value: formData.title || "Not provided",
+    },
+    {
+      label: "Organization",
+      value: formData.organization || "Not provided",
+    },
+    {
+      label: "Type",
+      value: formData.type,
+    },
+    {
+      label: "Stage",
+      value: formData.stage,
+    },
+    {
+      label: "Deadline",
+      value: formData.deadline || "Not provided",
+    },
+    {
+      label: "Website",
+      value: formData.link || "Not provided",
+    },
+    {
+      label: "Description",
+      value: formData.description || "Not provided",
+    },
+  ];
 
-function OpportunityReview() {
   return (
     <div className="space-y-6">
+
+      <button
+        onClick={onBack}
+        className="flex items-center gap-2 text-sm text-slate-400 hover:text-white"
+      >
+        <ArrowLeft size={18} />
+        Back
+      </button>
 
       <Card className="border-blue-500/30 bg-blue-500/10">
 
@@ -56,11 +61,11 @@ function OpportunityReview() {
 
           <div>
             <h2 className="font-semibold text-white">
-              AI Extraction Complete
+              Review Opportunity
             </h2>
 
             <p className="text-sm text-slate-400">
-              Confidence Score: 94%
+              Verify the details before saving.
             </p>
           </div>
 
@@ -68,34 +73,49 @@ function OpportunityReview() {
 
       </Card>
 
-      {extractedFields.map((field) => (
+      {fields.map((field) => (
         <Card
           key={field.label}
           className="flex items-center justify-between"
         >
           <div>
+
             <p className="text-sm text-slate-400">
               {field.label}
             </p>
 
-            <h3 className="mt-1 text-white font-medium">
+            <h3 className="mt-1 font-medium text-white">
               {field.value}
             </h3>
+
           </div>
 
-          {field.valid ? (
-            <CheckCircle2
-              className="text-emerald-400"
-              size={22}
-            />
-          ) : (
-            <AlertTriangle
-              className="text-amber-400"
-              size={22}
-            />
-          )}
+          <CheckCircle2
+            className="text-emerald-400"
+            size={22}
+          />
+
         </Card>
       ))}
+
+      <div className="flex justify-end gap-3">
+
+        <button
+          onClick={onBack}
+          className="rounded-lg border border-slate-700 px-5 py-2"
+        >
+          Back
+        </button>
+
+        <button
+          onClick={onApprove}
+          className="rounded-lg bg-emerald-600 px-5 py-2 font-medium hover:bg-emerald-700"
+        >
+          Approve Opportunity
+        </button>
+
+      </div>
+
     </div>
   );
 }

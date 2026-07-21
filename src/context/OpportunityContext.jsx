@@ -10,6 +10,7 @@ export function OpportunityProvider({ children }) {
 
     return saved ? JSON.parse(saved) : [];
   });
+  const [editingOpportunity, setEditingOpportunity] = useState(null);
 
 
   useEffect(() => {
@@ -21,6 +22,7 @@ export function OpportunityProvider({ children }) {
 
 
   function addOpportunity(opportunity) {
+    console.log("addOpportunity called", opportunity);
 
     const newOpportunity = {
       id: Date.now(),
@@ -73,14 +75,14 @@ export function OpportunityProvider({ children }) {
 
 
 
-  function updateStatus(id, status) {
+  function updateStage(id, stage) {
 
     setOpportunities((prev) =>
       prev.map((item) =>
         item.id === id
           ? {
               ...item,
-              status,
+              stage,
             }
           : item
       )
@@ -93,12 +95,15 @@ export function OpportunityProvider({ children }) {
   return (
     <OpportunityContext.Provider
       value={{
-        opportunities,
-        addOpportunity,
-        editOpportunity,
-        deleteOpportunity,
-        updateStatus,
-      }}
+  opportunities,
+  addOpportunity,
+  editOpportunity,
+  deleteOpportunity,
+  updateStage,
+
+  editingOpportunity,
+  setEditingOpportunity,
+}}
     >
       {children}
     </OpportunityContext.Provider>

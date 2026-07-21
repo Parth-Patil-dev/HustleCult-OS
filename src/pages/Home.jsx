@@ -10,8 +10,27 @@ import { Button } from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import QuickActions from "@/components/dashboard/QuickActions";
 import UpcomingDeadlines from "@/components/dashboard/UpcomingDeadlines";
+import { useOpportunities } from "@/context/OpportunityContext";
+import StatsCards from "@/features/dashboard/components/StatsCards";
+import StageChart from "@/features/dashboard/components/StageChart";
+import TypeChart from "@/features/dashboard/components/TypeChart";
 
 function Home() {
+  const { opportunities } = useOpportunities();
+
+const active = opportunities.filter(
+  (o) => o.stage === "Active"
+).length;
+
+const submitted = opportunities.filter(
+  (o) => o.stage === "Submitted"
+).length;
+
+const upcoming = opportunities.filter((o) => {
+  if (!o.deadline) return false;
+
+  return new Date(o.deadline) >= new Date();
+}).length;
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -26,37 +45,17 @@ function Home() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
-  <StatCard
-    title="Active Workspaces"
-    value="4"
-    subtitle="+1 this week"
-    icon={FolderKanban}
-  />
-
-  <StatCard
-    title="Open Opportunities"
-    value="12"
-    subtitle="3 closing soon"
-    icon={Trophy}
-  />
-
-  <StatCard
-    title="Upcoming Deadlines"
-    value="5"
-    subtitle="Next in 2 days"
-    icon={Clock}
-  />
-
-  <StatCard
-    title="Core Members"
-    value="4"
-    subtitle="All active"
-    icon={Users}
-  />
-</div>
+      <StatsCards />
 <QuickActions />
 <UpcomingDeadlines />
+<div className="grid gap-6 xl:grid-cols-2">
+  <StageChart />
+  <TypeChart />
+</div>
+<div className="grid gap-6 xl:grid-cols-2">
+    <StageChart />
+    <TypeChart />
+</div>
     </div>
   );
 }
