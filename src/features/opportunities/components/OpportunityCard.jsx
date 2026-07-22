@@ -1,7 +1,13 @@
-import { CalendarDays, Building2, Pencil, Trash2 } from "lucide-react";
+import {
+  CalendarDays,
+  Building2,
+  Pencil,
+  Trash2,
+  GripVertical,
+} from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useOpportunities } from "@/context/OpportunityContext";
-import { useDraggable } from "@dnd-kit/core";
+import { useSortable } from "@dnd-kit/sortable";
 import { useNavigate } from "react-router-dom";
 import { CSS } from "@dnd-kit/utilities";
 const stageColors = {
@@ -24,12 +30,15 @@ const {
   listeners,
   setNodeRef,
   transform,
+  transition,
   isDragging,
-} = useDraggable({
+} = useSortable({
   id: opportunity.id,
 });
+
 const style = {
-  transform: CSS.Translate.toString(transform),
+  transform: CSS.Transform.toString(transform),
+  transition,
   opacity: isDragging ? 0.5 : 1,
 };
   
@@ -38,29 +47,37 @@ const style = {
     <div
   ref={setNodeRef}
   style={style}
-  {...listeners}
-  {...attributes}
-  onClick={() => navigate(`/opportunities/${opportunity.id}`)}
+  onClick={() => {
+    console.log("Card clicked");
+    navigate(`/opportunities/${opportunity.id}`);
+  }}
   className="cursor-pointer rounded-xl border bg-card p-5 shadow-sm transition hover:shadow-md hover:scale-[1.02]"
 >
 
       <div className="flex items-start justify-between">
 
-        <div>
+  <div>
 
-          <h3 className="text-lg font-semibold">
-            {opportunity.title}
-          </h3>
+    <h3 className="text-lg font-semibold">
+      {opportunity.title}
+    </h3>
 
-          <p className="mt-1 text-sm text-muted-foreground">
-            {opportunity.type}
-          </p>
+    <p className="mt-1 text-sm text-muted-foreground">
+      {opportunity.type}
+    </p>
 
-        </div>
+  </div>
 
-         
+  <button
+    {...listeners}
+    {...attributes}
+    onClick={(e) => e.stopPropagation()}
+    className="cursor-grab rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-white active:cursor-grabbing"
+  >
+    <GripVertical size={18} />
+  </button>
 
-      </div>
+</div>
 
       <div className="mt-5 space-y-2">
         <span

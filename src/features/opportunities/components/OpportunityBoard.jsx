@@ -1,6 +1,10 @@
 import OpportunityColumn from "./OpportunityColumn";
 import { useOpportunities } from "@/context/OpportunityContext";
 import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import {
   DndContext,
   closestCorners,
 } from "@dnd-kit/core";
@@ -89,15 +93,24 @@ function handleDragEnd(event) {
   onDragEnd={handleDragEnd}
 >
     <div className="flex gap-6 overflow-x-auto pb-4">
-      {stages.map((stage) => (
-        <OpportunityColumn
-          key={stage}
-          title={stage}
-          opportunities={sortedOpportunities.filter(
-  (opp) => opp.stage === stage
-)}
-        />
-      ))}
+      {stages.map((stage) => {
+  const stageOpportunities = sortedOpportunities.filter(
+    (opp) => opp.stage === stage
+  );
+
+  return (
+    <SortableContext
+      key={stage}
+      items={stageOpportunities.map((opp) => opp.id)}
+      strategy={verticalListSortingStrategy}
+    >
+      <OpportunityColumn
+        title={stage}
+        opportunities={stageOpportunities}
+      />
+    </SortableContext>
+  );
+})}
     </div>
   </DndContext>
 );
