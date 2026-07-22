@@ -12,10 +12,11 @@ function Opportunities() {
   const [stageFilter, setStageFilter] = useState("");
   const [sortBy, setSortBy] = useState("");
 const [typeFilter, setTypeFilter] = useState("");
+const [priorityFilter, setPriorityFilter] = useState("");
 const [editingOpportunity, setEditingOpportunity] = useState(null);
 
   return (
-    <>
+  <div className="w-full min-w-0">
       <PageHeader
         title="Opportunities"
         description="Track every opportunity from discovery to results."
@@ -67,6 +68,17 @@ const [editingOpportunity, setEditingOpportunity] = useState(null);
     ]}
   />
   <FilterSelect
+  value={priorityFilter}
+  onChange={setPriorityFilter}
+  placeholder="All Priorities"
+  options={[
+    "Critical",
+    "High",
+    "Medium",
+    "Low",
+  ]}
+/>
+  <FilterSelect
   value={sortBy}
   onChange={setSortBy}
   placeholder="Sort"
@@ -84,17 +96,14 @@ const [editingOpportunity, setEditingOpportunity] = useState(null);
   search={search}
   stageFilter={stageFilter}
   typeFilter={typeFilter}
+  priorityFilter={priorityFilter}
   sortBy={sortBy}
 />
 
       <div className="mt-10">
-        <AddOpportunityModal
-          open={open}
-          onOpenChange={setOpen}
-        />
       </div>
-    </>
-  );
+      </div>
+);
 }
 
 export default Opportunities;

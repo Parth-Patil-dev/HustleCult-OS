@@ -1,11 +1,12 @@
 import {
   Home,
+  Briefcase,
+  CalendarDays,
   Inbox,
   FolderKanban,
-  Trophy,
-  Lightbulb,
   BookOpen,
   Settings,
+  Lightbulb,
 } from "lucide-react";
 
 import { ROUTES } from "./routes";
@@ -29,8 +30,13 @@ export const sidebarItems = [
   {
     title: "Opportunities",
     path: ROUTES.OPPORTUNITIES,
-    icon: Trophy,
+    icon: Briefcase,
   },
+  {
+  title: "Calendar",
+  path: "/calendar",
+  icon: CalendarDays,
+},
   {
     title: "Ideas",
     path: ROUTES.IDEA_VAULT,

@@ -1,52 +1,82 @@
-import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/Button";
+import {
+  CalendarDays,
+  Building2,
+  Tag,
+} from "lucide-react";
+import PriorityBadge from "@/components/common/PriorityBadge";
 
 const stageColors = {
-  Found: "bg-blue-500/20 text-blue-400",
-  Interested: "bg-purple-500/20 text-purple-400",
-  Researching: "bg-yellow-500/20 text-yellow-400",
-  Active: "bg-green-500/20 text-green-400",
-  Submitted: "bg-orange-500/20 text-orange-400",
-  Results: "bg-pink-500/20 text-pink-400",
+  Found: "bg-blue-500/20 text-blue-300",
+  Interested: "bg-purple-500/20 text-purple-300",
+  Researching: "bg-yellow-500/20 text-yellow-300",
+  Active: "bg-green-500/20 text-green-300",
+  Submitted: "bg-orange-500/20 text-orange-300",
+  Results: "bg-pink-500/20 text-pink-300",
 };
 
 function HeroSection({ opportunity }) {
-  const navigate = useNavigate();
-
   return (
-    <div className="space-y-5">
+    <div className="rounded-2xl border border-slate-800 bg-slate-900 p-8">
 
-      <Button
-        variant="ghost"
-        onClick={() => navigate("/opportunities")}
-        className="gap-2"
-      >
-        <ArrowLeft size={18} />
-        Back
-      </Button>
+      <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
 
-      <div className="flex items-start justify-between">
-
+        {/* Left */}
         <div>
 
           <h1 className="text-4xl font-bold text-white">
             {opportunity.title}
           </h1>
 
-          <p className="mt-2 text-slate-400">
-            {opportunity.organization}
-          </p>
+
+          <div className="mt-3 space-y-2 text-slate-400">
+
+            <div className="flex items-center gap-2">
+              <Building2 size={18}/>
+              {opportunity.organization || "Unknown Organization"}
+            </div>
+
+
+            <div className="flex items-center gap-2">
+              <Tag size={18}/>
+              {opportunity.type || "Unknown Type"}
+            </div>
+
+
+            <div className="flex items-center gap-2">
+              <CalendarDays size={18}/>
+              {opportunity.deadline || "No Deadline"}
+            </div>
+
+          </div>
 
         </div>
 
-        <span
-          className={`rounded-full px-4 py-2 text-sm font-medium ${
-            stageColors[opportunity.stage]
-          }`}
-        >
-          {opportunity.stage}
-        </span>
+
+        {/* Right */}
+        <div className="flex flex-col items-end gap-3">
+
+
+          <span
+            className={`
+              rounded-full px-4 py-2
+              text-sm font-semibold
+              ${
+                stageColors[opportunity.stage]
+                ||
+                "bg-slate-700 text-white"
+              }
+            `}
+          >
+            {opportunity.stage}
+          </span>
+
+
+          <PriorityBadge
+            priority={opportunity.priority || "Medium"}
+          />
+
+
+        </div>
 
       </div>
 

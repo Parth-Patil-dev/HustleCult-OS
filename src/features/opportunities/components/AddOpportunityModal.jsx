@@ -28,15 +28,16 @@ const {
 const [method, setMethod] = useState(null);
 
   const [formData, setFormData] = useState({
-    title: "",
-    organization: "",
-    type: "Hackathon",
-    deadline: "",
-    description: "",
-    stage: "Found",
-    link: "",
-    members: [],
-  });
+  title: "",
+  organization: "",
+  type: "Hackathon",
+  deadline: "",
+  description: "",
+  stage: "Found",
+  link: "",
+  members: [],
+  priority: "Medium",
+});
   useEffect(() => {
   if (!editingOpportunity) return;
 
@@ -49,6 +50,7 @@ const [method, setMethod] = useState(null);
     stage: editingOpportunity.stage || "Found",
     link: editingOpportunity.link || "",
     members: editingOpportunity.members || [],
+    priority: editingOpportunity.priority || "Medium",
   });
 
   setMethod("manual");
@@ -68,6 +70,7 @@ const [method, setMethod] = useState(null);
       description: "",
       stage: "Found",
       link: "",
+      priority: "Medium",
       members: [],
     });
 setEditingOpportunity(null);

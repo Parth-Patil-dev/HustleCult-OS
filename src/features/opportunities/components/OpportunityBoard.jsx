@@ -1,5 +1,7 @@
 import OpportunityColumn from "./OpportunityColumn";
 import { useOpportunities } from "@/context/OpportunityContext";
+import OpportunityCard from "./OpportunityCard";
+import { useState } from "react";
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -7,6 +9,7 @@ import {
 import {
   DndContext,
   closestCorners,
+  DragOverlay,
 } from "@dnd-kit/core";
 const stages = [
   "Found",
@@ -21,8 +24,10 @@ function OpportunityBoard({
   search,
   stageFilter,
   typeFilter,
+  priorityFilter,
   sortBy,
 }) {
+  const [activeOpportunity, setActiveOpportunity] = useState(null);
   const {
   opportunities,
   updateStage,
@@ -39,9 +44,18 @@ const filteredOpportunities = opportunities.filter((opp) => {
     !stageFilter || opp.stage === stageFilter;
 
   const matchesType =
-    !typeFilter || opp.type === typeFilter;
+  !typeFilter || opp.type === typeFilter;
 
-  return matchesSearch && matchesStage && matchesType;
+const matchesPriority =
+  !priorityFilter ||
+  (opp.priority || "Medium") === priorityFilter;
+
+return (
+  matchesSearch &&
+  matchesStage &&
+  matchesType &&
+  matchesPriority
+);
 }); 
 const sortedOpportunities = [...filteredOpportunities];
 
@@ -79,39 +93,72 @@ switch (sortBy) {
   default:
     break;
 }
+function handleDragStart(event) {
+  const { active } = event;
+
+  const opportunity = opportunities.find(
+    (opp) => opp.id === active.id
+  );
+
+  setActiveOpportunity(opportunity);
+}
 function handleDragEnd(event) {
   const { active, over } = event;
 
   if (!over) return;
 
-  updateStage(active.id, over.id);
+  const activeId = active.id;
+
+  let newStage = over.id;
+
+  // if dropped on another card,
+  // find that card's stage
+  const overOpportunity = opportunities.find(
+    (opp) => opp.id === over.id
+  );
+
+  if (overOpportunity) {
+    newStage = overOpportunity.stage;
+  }
+
+  updateStage(activeId, newStage);
+setActiveOpportunity(null);
+}
+function handleDragCancel() {
+  setActiveOpportunity(null);
 }
 
   return (
   <DndContext
   collisionDetection={closestCorners}
+  onDragStart={handleDragStart}
   onDragEnd={handleDragEnd}
+  onDragCancel={handleDragCancel}
 >
-    <div className="flex gap-6 overflow-x-auto pb-4">
+    <div className="w-full overflow-x-auto">
+  <div className="flex gap-6 pb-4">
       {stages.map((stage) => {
   const stageOpportunities = sortedOpportunities.filter(
     (opp) => opp.stage === stage
   );
 
   return (
-    <SortableContext
-      key={stage}
-      items={stageOpportunities.map((opp) => opp.id)}
-      strategy={verticalListSortingStrategy}
-    >
-      <OpportunityColumn
-        title={stage}
-        opportunities={stageOpportunities}
-      />
-    </SortableContext>
+    <OpportunityColumn
+  key={stage}
+  title={stage}
+  opportunities={stageOpportunities}
+/>
   );
 })}
+</div>
     </div>
+    <DragOverlay>
+  {activeOpportunity ? (
+    <OpportunityCard
+      opportunity={activeOpportunity}
+    />
+  ) : null}
+</DragOverlay>
   </DndContext>
 );
 }

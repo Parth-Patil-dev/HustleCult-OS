@@ -1,4 +1,5 @@
 import { ArrowLeft } from "lucide-react";
+import { PRIORITIES } from "@/constants/priorities";
 
 function ManualEntryForm({
   formData,
@@ -85,6 +86,35 @@ function ManualEntryForm({
           placeholder="Website URL"
           className="w-full rounded-lg border border-slate-700 bg-slate-900 p-3"
         />
+        <div className="space-y-2">
+
+  <label className="text-sm text-slate-300">
+    Priority
+  </label>
+
+  <select
+    value={formData.priority || "Medium"}
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        priority: e.target.value,
+      })
+    }
+    className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-white outline-none focus:border-blue-500"
+  >
+
+    {PRIORITIES.map((priority) => (
+      <option
+        key={priority}
+        value={priority}
+      >
+        {priority}
+      </option>
+    ))}
+
+  </select>
+
+</div>
 
         <textarea
           name="description"

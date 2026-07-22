@@ -5,17 +5,22 @@ import Topbar from "@/components/layout/Topbar/Topbar";
 
 function MainLayout() {
   return (
-    <div className="flex h-screen bg-slate-950">
+    <div className="flex min-h-screen bg-slate-950">
+
       <Sidebar />
 
-      <div className="flex flex-1 flex-col">
-        <Topbar />
+<div className="flex-1">
 
-        <main className="flex-1 overflow-y-auto p-6">
-          <Outlet />
-        </main>
+  <Topbar />
+
+  <main className="bg-slate-950 p-6">
+    <Outlet />
+  </main>
+
+</div>
+
       </div>
-    </div>
+
   );
 }
 

@@ -10,6 +10,7 @@ import { useOpportunities } from "@/context/OpportunityContext";
 import { useSortable } from "@dnd-kit/sortable";
 import { useNavigate } from "react-router-dom";
 import { CSS } from "@dnd-kit/utilities";
+import PriorityBadge from "@/components/common/PriorityBadge";
 const stageColors = {
   Found: "bg-blue-100 text-blue-700",
   Interested: "bg-purple-100 text-purple-700",
@@ -47,14 +48,29 @@ const style = {
     <div
   ref={setNodeRef}
   style={style}
-  onClick={() => {
-    console.log("Card clicked");
+  onClick={(e)=>{
+    if(isDragging) return;
     navigate(`/opportunities/${opportunity.id}`);
   }}
-  className="cursor-pointer rounded-xl border bg-card p-5 shadow-sm transition hover:shadow-md hover:scale-[1.02]"
+  className="
+    cursor-pointer
+    rounded-xl
+    border
+    border-slate-800
+    bg-slate-900
+    p-5
+    shadow-sm
+    transition
+    hover:bg-slate-800
+    hover:scale-[1.02]
+  "
 >
 
       <div className="flex items-start justify-between">
+
+  <div>
+
+    <div className="flex items-start justify-between gap-3">
 
   <div>
 
@@ -65,6 +81,14 @@ const style = {
     <p className="mt-1 text-sm text-muted-foreground">
       {opportunity.type}
     </p>
+
+  </div>
+
+  <PriorityBadge
+    priority={opportunity.priority || "Medium"}
+  />
+
+</div>
 
   </div>
 

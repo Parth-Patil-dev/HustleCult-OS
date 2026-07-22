@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
-
+import OpportunityDetails from "../pages/OpportunityDetails";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Workspaces from "../pages/Workspaces";
@@ -12,6 +12,7 @@ import KnowledgeBase from "../pages/KnowledgeBase";
 import Settings from "../pages/Settings";
 import NotFound from "../pages/NotFound";
 import Inbox from "@/pages/Inbox";
+import Calendar from "@/pages/Calendar";
 
 import { ROUTES } from "../constants/routes";
 
@@ -34,6 +35,14 @@ function AppRoutes() {
             path={ROUTES.OPPORTUNITIES}
             element={<Opportunities />}
           />
+          <Route
+  path="/calendar"
+  element={<Calendar />}
+/>
+          <Route
+  path="/opportunities/:id"
+  element={<OpportunityDetails />}
+/>
           <Route
             path={ROUTES.IDEA_VAULT}
             element={<IdeaVault />}
