@@ -7,6 +7,7 @@ import { OpportunityProvider } from "./context/OpportunityContext";
 import { EventProvider } from "./context/EventContext";
 import ReminderEngine from "./features/reminders/ReminderEngine";
 import { Toaster } from "react-hot-toast";
+import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -19,7 +20,9 @@ createRoot(document.getElementById("root")).render(
 
       <ReminderEngine />
 
-      <App />
+      <BrowserRouter>
+  <App />
+</BrowserRouter>
 
       <Toaster />
 

@@ -5,7 +5,7 @@ import Topbar from "@/components/layout/Topbar/Topbar";
 
 function MainLayout() {
   return (
-    <div className="flex min-h-screen bg-slate-950">
+    <div className="flex min-h-screen bg-slate-950 overflow-hidden">
 
       <Sidebar />
 
@@ -13,7 +13,7 @@ function MainLayout() {
 
   <Topbar />
 
-  <main className="bg-slate-950 p-6">
+  <main className="relative bg-slate-950 p-6 overflow-hidden">
     <Outlet />
   </main>
 

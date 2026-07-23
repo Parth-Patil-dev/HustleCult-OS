@@ -11,6 +11,8 @@ import { useSortable } from "@dnd-kit/sortable";
 import { useNavigate } from "react-router-dom";
 import { CSS } from "@dnd-kit/utilities";
 import PriorityBadge from "@/components/common/PriorityBadge";
+import ProgressBar from "@/components/ui/ProgressBar";
+import { calculateOpportunityHealth } from "@/utils/opportunityHealth";
 const stageColors = {
   Found: "bg-blue-100 text-blue-700",
   Interested: "bg-purple-100 text-purple-700",
@@ -42,6 +44,27 @@ const style = {
   transition,
   opacity: isDragging ? 0.5 : 1,
 };
+const tasks = opportunity.tasks || [];
+
+const completedTasks = tasks.filter(
+  (task) => task.completed
+).length;
+
+const progress =
+  tasks.length === 0
+    ? 0
+    : Math.round(
+        (completedTasks / tasks.length) * 100
+      );
+
+const health = calculateOpportunityHealth(opportunity);
+
+const healthColor =
+  health >= 80
+    ? "text-emerald-400"
+    : health >= 50
+    ? "text-yellow-400"
+    : "text-red-400";
   
 
   return (
@@ -53,17 +76,20 @@ const style = {
     navigate(`/opportunities/${opportunity.id}`);
   }}
   className="
-    cursor-pointer
-    rounded-xl
-    border
-    border-slate-800
-    bg-slate-900
-    p-5
-    shadow-sm
-    transition
-    hover:bg-slate-800
-    hover:scale-[1.02]
-  "
+group
+cursor-pointer
+rounded-xl
+border
+border-slate-800
+bg-slate-900
+p-5
+shadow-sm
+transition-all
+duration-200
+hover:-translate-y-1
+hover:border-blue-500/40
+hover:shadow-xl
+"
 >
 
       <div className="flex items-start justify-between">
@@ -124,13 +150,57 @@ const style = {
 
       </div>
 
-      {opportunity.description && (
-        <p className="mt-4 text-sm">
-          {opportunity.description}
-        </p>
-      )}
+      <div className="mt-5">
+  <div className="mb-2 flex items-center justify-between text-xs">
+    <span className="text-slate-400">
+      Progress
+    </span>
 
-      <div className="mt-6 flex justify-end gap-2">
+    <span className="font-semibold text-white">
+      {progress}%
+    </span>
+  </div>
+
+  <ProgressBar value={progress} />
+</div>
+
+<div className="mt-4 flex items-center justify-between text-sm">
+
+  <span className={healthColor}>
+    ● Health {health}%
+  </span>
+
+  <span className="text-slate-400">
+    ☑ {completedTasks}/{tasks.length}
+  </span>
+
+</div>
+
+      <div className="mt-6 flex justify-end gap-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+
+  <Button
+    variant="outline"
+    size="sm"
+    onClick={(e) => {
+      e.stopPropagation();
+      setEditingOpportunity(opportunity);
+    }}
+  >
+    <Pencil size={16} />
+  </Button>
+
+  <Button
+    variant="destructive"
+    size="sm"
+    onClick={(e) => {
+      e.stopPropagation();
+      deleteOpportunity(opportunity.id);
+    }}
+  >
+    <Trash2 size={16} />
+  </Button>
+
+</div>
 
         <Button
   variant="outline"
@@ -156,7 +226,6 @@ const style = {
 
       </div>
 
-    </div>
   );
 }
 

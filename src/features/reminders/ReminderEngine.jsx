@@ -9,10 +9,6 @@ function ReminderEngine() {
   const {
     opportunities,
   } = useOpportunities();
-  console.log(
-  "Opportunity count:",
-  opportunities.length
-);
 
 
   const {
@@ -47,22 +43,18 @@ function ReminderEngine() {
           (deadline - today) /
           (1000 * 60 * 60 * 24)
         );
-        console.log(
-  "Days remaining:",
-  diff
-);
 
 
-      if (diff <= 1) {
+      if (diff === 1) {
 
-        // const exists =
-        //   notifications.some(
-        //     (n) =>
-        //       n.message.includes(
-        //         opp.title
-        //       ) &&
-        //       n.type === "deadline"
-        //   );
+        const exists =
+          notifications.some(
+            (n) =>
+              n.message.includes(
+                opp.title
+              ) &&
+              n.type === "deadline"
+          );
 
 
         if (!exists) {
@@ -87,8 +79,10 @@ function ReminderEngine() {
 
 
   }, [
-    opportunities,
-  ]);
+  opportunities,
+  notifications,
+  addNotification,
+]);
 
 
 

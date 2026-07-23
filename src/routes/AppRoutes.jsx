@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
 import OpportunityDetails from "../pages/OpportunityDetails";
@@ -18,7 +18,7 @@ import { ROUTES } from "../constants/routes";
 
 function AppRoutes() {
   return (
-    <BrowserRouter>
+    
       <Routes>
         {/* Public Routes */}
         <Route path={ROUTES.LOGIN} element={<Login />} />
@@ -59,7 +59,6 @@ function AppRoutes() {
         {/* 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
   );
 }
 

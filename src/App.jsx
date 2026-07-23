@@ -1,12 +1,14 @@
 import AppRoutes from "./routes/AppRoutes";
-import OpportunityDetails from "./pages/OpportunityDetails";
+import CommandPalette from "@/features/search/CommandPalette";
 
 function App() {
-  return <AppRoutes />;
-  <Route
-  path="/opportunities/:id"
-  element={<OpportunityDetails />}
-/>
+  return (
+    <>
+      <AppRoutes />
+
+      <CommandPalette />
+    </>
+  );
 }
 
 export default App;

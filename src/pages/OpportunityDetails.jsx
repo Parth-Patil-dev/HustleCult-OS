@@ -16,7 +16,7 @@ import AddOpportunityModal from "@/features/opportunities/components/AddOpportun
 import { useState } from "react";
 
 function OpportunityDetails() {
-  const [open, setOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("overview");
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -71,13 +71,64 @@ function OpportunityDetails() {
 
       <HeroSection opportunity={opportunity} />
 
-<InfoCards opportunity={opportunity} />
+<div className="grid gap-6 lg:grid-cols-3">
 
-<QuickActionsCard
-  opportunity={opportunity}
-/>
+  <div className="lg:col-span-2">
+    <InfoCards opportunity={opportunity} />
+  </div>
 
-<div className="space-y-6 lg:col-span-2">
+  <QuickActionsCard
+    opportunity={opportunity}
+  />
+
+</div>
+
+<div
+  className="
+    sticky
+    top-0
+    z-30
+    flex
+    gap-2
+    border-b
+    border-slate-800
+    bg-slate-950/90
+    backdrop-blur-md
+    py-3
+  "
+>
+
+{
+[
+  {id:"overview", label:"Overview"},
+  {id:"tasks", label:"Tasks"},
+  {id:"discussion", label:"Discussion"},
+  {id:"timeline", label:"Timeline"},
+  {id:"files", label:"Files"},
+  {id:"notes", label:"Notes"},
+].map((tab)=>(
+<button
+key={tab.id}
+onClick={()=>setActiveTab(tab.id)}
+className={`px-4 py-3 text-sm font-medium transition-all duration-200 border-b-2 ${
+  activeTab === tab.id
+    ? "border-blue-500 text-white"
+    : "border-transparent text-slate-400 hover:text-white"
+}`}
+>
+{tab.label}
+</button>
+))
+
+}
+
+</div>
+
+<div className="space-y-6">
+
+{
+activeTab === "overview" && (
+<div className="grid gap-6 lg:grid-cols-2">
 
   <DescriptionCard
     description={opportunity.description}
@@ -87,25 +138,54 @@ function OpportunityDetails() {
     members={opportunity.members || []}
   />
 
-  <TasksCard
-    opportunity={opportunity}
-  />
+</div>
+)
+}
 
-  <CommentsCard
-    opportunity={opportunity}
-  />
 
-  <TimelineCard
-    activity={opportunity.activity || []}
-  />
+{
+activeTab === "tasks" && (
+<TasksCard
+opportunity={opportunity}
+/>
+)
+}
 
-  <AttachmentsCard
-    opportunity={opportunity}
-  />
 
-  <NotesCard
-    opportunity={opportunity}
-  />
+{
+activeTab === "discussion" && (
+<CommentsCard
+opportunity={opportunity}
+/>
+)
+}
+
+
+{
+activeTab === "timeline" && (
+<TimelineCard
+activity={opportunity.activity || []}
+/>
+)
+}
+
+
+{
+activeTab === "files" && (
+<AttachmentsCard
+opportunity={opportunity}
+/>
+)
+}
+
+
+{
+activeTab === "notes" && (
+<NotesCard
+opportunity={opportunity}
+/>
+)
+}
 
 </div>
 

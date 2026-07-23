@@ -111,8 +111,6 @@ function handleDragEnd(event) {
 
   let newStage = over.id;
 
-  // if dropped on another card,
-  // find that card's stage
   const overOpportunity = opportunities.find(
     (opp) => opp.id === over.id
   );

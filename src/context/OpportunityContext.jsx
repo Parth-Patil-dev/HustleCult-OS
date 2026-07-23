@@ -34,11 +34,14 @@ const { addNotification } = useNotifications();
   priority: "Medium",
 activity: [
     {
-      id: crypto.randomUUID(),
-      type: "created",
-      message: "Opportunity created",
-      time: new Date().toISOString(),
-    },
+ id: crypto.randomUUID(),
+ text,
+ completed:false,
+ assignedTo:null,
+ dueDate:null,
+ priority:"Medium",
+ createdAt:new Date().toISOString(),
+},
   ],
 
   ...opportunity,

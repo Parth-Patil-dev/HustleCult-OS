@@ -16,7 +16,7 @@ const [priorityFilter, setPriorityFilter] = useState("");
 const [editingOpportunity, setEditingOpportunity] = useState(null);
 
   return (
-  <div className="w-full min-w-0">
+  <div className="relative w-full min-w-0 overflow-hidden">
       <PageHeader
         title="Opportunities"
         description="Track every opportunity from discovery to results."

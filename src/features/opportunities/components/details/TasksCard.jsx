@@ -113,7 +113,7 @@ function TasksCard({ opportunity }) {
       {/* Task List */}
       <div className="mt-6 space-y-3">
         {totalTasks === 0 ? (
-          <p className="text-slate-400">
+          <div className="text-slate-400">
             <div className="rounded-lg border border-dashed border-slate-700 py-8 text-center">
   <CheckSquare
     size={34}
@@ -128,7 +128,7 @@ function TasksCard({ opportunity }) {
     Add your first action item.
   </p>
 </div>
-          </p>
+          </div>
         ) : (
           sortedTasks.map((task) => (
             <div
